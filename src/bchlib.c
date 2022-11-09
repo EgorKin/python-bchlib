@@ -86,7 +86,7 @@ BCH_init(BCHObject *self, PyObject *args, PyObject *kwds)
 		m++;
 	}
 
-	self->bch = init_bch(m, t, prim_poly);
+	self->bch = init_bch(m, t, prim_poly, false);
 	if (!self->bch) {
 		PyErr_SetString(PyExc_RuntimeError,
 			"unable to inititalize BCH, bad parameters?");
