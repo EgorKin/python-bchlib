@@ -8,13 +8,13 @@ And also update bch source code from kernel source tree.
   For Windows, python3.5 or greater required.<br>
   For Linux and MacOS, python2.7 or python3.4 or greater required.
 
-## Installing the latest release:
-    $ pip install bchlib
-
 ## Installing from source:
   Make sure you have python-dev setup.  For Windows, this means you need [Visual Studio 2015](https://stackoverflow.com/a/44290942/6844002).
 
-    $ pip install .
+    $ git clone https://github.com/EgorKin/python-bchlib
+    $ cd python-bchlib
+    $ python3 ./setup.py build
+    $ python3 ./setup.py install
 
 ## Module Documentation
 bchlib.__BCH(__ polynomial, t[, reverse] __)__ → bch
