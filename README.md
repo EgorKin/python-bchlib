@@ -2,6 +2,7 @@ python-bchlib [![Build Status](https://travis-ci.com/jkent/python-bchlib.svg?bra
 =============
 
 This is a python module for encoding and correcting data using [BCH codes](https://en.wikipedia.org/wiki/BCH_code).  This is a fork of https://github.com/jkent/python-bchlib that extends support for Galois Field orders up to 31 (previous implementation supported up to 15).
+And also update bch source code from kernel cource tree.
 
 ## Requirements
   For Windows, python3.5 or greater required.<br>
@@ -54,57 +55,5 @@ bch.__t__
 
 ## Usage Example
 
-```python
-import bchlib
-import hashlib
-import os
-import random
-
-# create a bch object
-BCH_POLYNOMIAL = 8219
-BCH_BITS = 16
-bch = bchlib.BCH(BCH_POLYNOMIAL, BCH_BITS)
-
-# random data
-data = bytearray(os.urandom(512))
-
-# encode and make a "packet"
-ecc = bch.encode(data)
-packet = data + ecc
-
-# print hash of packet
-sha1_initial = hashlib.sha1(packet)
-print('sha1: %s' % (sha1_initial.hexdigest(),))
-
-def bitflip(packet):
-    byte_num = random.randint(0, len(packet) - 1)
-    bit_num = random.randint(0, 7)
-    packet[byte_num] ^= (1 << bit_num)
-
-# make BCH_BITS errors
-for _ in range(BCH_BITS):
-    bitflip(packet)
-
-# print hash of packet
-sha1_corrupt = hashlib.sha1(packet)
-print('sha1: %s' % (sha1_corrupt.hexdigest(),))
-
-# de-packetize
-data, ecc = packet[:-bch.ecc_bytes], packet[-bch.ecc_bytes:]
-
-# correct
-bitflips = bch.decode_inplace(data, ecc)
-print('bitflips: %d' % (bitflips))
-
-# packetize
-packet = data + ecc
-
-# print hash of packet
-sha1_corrected = hashlib.sha1(packet)
-print('sha1: %s' % (sha1_corrected.hexdigest(),))
-
-if sha1_initial.digest() == sha1_corrected.digest():
-    print('Corrected!')
-else:
-    print('Failed')
+```Look at test.py
 ```
