@@ -154,7 +154,7 @@ struct gf_poly_deg1 {
 	unsigned int   c[2];
 };
 
-static u8 swap_bits_table[] = {
+static uint8_t swap_bits_table[] = {
 	0x00, 0x80, 0x40, 0xc0, 0x20, 0xa0, 0x60, 0xe0,
 	0x10, 0x90, 0x50, 0xd0, 0x30, 0xb0, 0x70, 0xf0,
 	0x08, 0x88, 0x48, 0xc8, 0x28, 0xa8, 0x68, 0xe8,
@@ -189,7 +189,7 @@ static u8 swap_bits_table[] = {
 	0x1f, 0x9f, 0x5f, 0xdf, 0x3f, 0xbf, 0x7f, 0xff,
 };
 
-static u8 swap_bits(struct bch_control *bch, u8 in)
+static uint8_t swap_bits(struct bch_control *bch, uint8_t in)
 {
 	if (!bch->swap_bits)
 		return in;
@@ -221,7 +221,7 @@ static void encode_bch_unaligned(struct bch_control *bch,
 	const int l = BCH_ECC_WORDS(bch)-1;
 
 	while (len--) {
-		u8 tmp = swap_bits(bch, *data++);
+		uint8_t tmp = swap_bits(bch, *data++);
 
 		p = bch->mod8_tab + (l+1)*(((ecc[0] >> 24)^(tmp)) & 0xff);
 
@@ -242,15 +242,15 @@ static void load_ecc8(struct bch_control *bch, uint32_t *dst,
 	unsigned int i, nwords = BCH_ECC_WORDS(bch)-1;
 
 	for (i = 0; i < nwords; i++, src += 4)
-		dst[i] = ((u32)swap_bits(bch, src[0]) << 24) |
-			((u32)swap_bits(bch, src[1]) << 16) |
-			((u32)swap_bits(bch, src[2]) << 8) |
+		dst[i] = ((uint32_t)swap_bits(bch, src[0]) << 24) |
+			((uint32_t)swap_bits(bch, src[1]) << 16) |
+			((uint32_t)swap_bits(bch, src[2]) << 8) |
 			swap_bits(bch, src[3]);
 
 	memcpy(pad, src, BCH_ECC_BYTES(bch)-4*nwords);
-	dst[nwords] = ((u32)swap_bits(bch, pad[0]) << 24) |
-		((u32)swap_bits(bch, pad[1]) << 16) |
-		((u32)swap_bits(bch, pad[2]) << 8) |
+	dst[nwords] = ((uint32_t)swap_bits(bch, pad[0]) << 24) |
+		((uint32_t)swap_bits(bch, pad[1]) << 16) |
+		((uint32_t)swap_bits(bch, pad[2]) << 8) |
 		swap_bits(bch, pad[3]);
 }
 
@@ -304,7 +304,7 @@ void encode_bch(struct bch_control *bch, const uint8_t *data,
 	const uint32_t * const tab3 = tab2 + 256*(l+1);
 	const uint32_t *pdata, *p0, *p1, *p2, *p3;
 
-	if (WARN_ON(r_bytes > sizeof(r)))
+	if (/*WARN_ON*/(r_bytes > sizeof(r)))
 		return;
 
 	if (ecc) {
@@ -345,10 +345,10 @@ void encode_bch(struct bch_control *bch, const uint8_t *data,
 		/* input data is read in big-endian format */
 		w = cpu_to_be32(*pdata++);
 		if (bch->swap_bits)
-			w = (u32)swap_bits(bch, w) |
-			    ((u32)swap_bits(bch, w >> 8) << 8) |
-			    ((u32)swap_bits(bch, w >> 16) << 16) |
-			    ((u32)swap_bits(bch, w >> 24) << 24);
+			w = (uint32_t)swap_bits(bch, w) |
+			    ((uint32_t)swap_bits(bch, w >> 8) << 8) |
+			    ((uint32_t)swap_bits(bch, w >> 16) << 16) |
+			    ((uint32_t)swap_bits(bch, w >> 24) << 24);
 		w ^= r[0];
 		p0 = tab0 + (l+1)*((w >>  0) & 0xff);
 		p1 = tab1 + (l+1)*((w >>  8) & 0xff);
