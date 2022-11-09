@@ -3,7 +3,7 @@
 
 from setuptools import Extension, setup
 
-__version__ = '0.14.0'
+__version__ = '0.14.1'
 
 bchlib_src = ['src/bchlib.c',
               'src/bch.c']
@@ -14,7 +14,7 @@ bchlib_ext = Extension('bchlib', bchlib_src, depends=bchlib_dep,
 
 setup(name='bchlib', version = __version__,
       ext_modules = [bchlib_ext],
-      description = 'A python wrapper module for the kernel BCH library.  A fork of https://github.com/jkent/python-bchlib that extends support for Galois Field orders up to 31.',
+      description = 'A python wrapper module for the kernel BCH library.  A fork of https://github.com/jkent/python-bchlib that extends support for Galois Field orders up to 31. And also update bch source code from kernel source tree.',
       url = 'https://github.com/Ben-Mathews/python-bchlib',
       author = 'Ben Mathews',
       author_email = 'beniam@yahoo.com',
