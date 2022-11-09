@@ -124,7 +124,7 @@
 #define GF_M(_p)               ((_p)->m)
 #define GF_T(_p)               ((_p)->t)
 #define GF_N(_p)               ((_p)->n)
-#define BCH_MAX_M              15 /* 2KB */
+#define BCH_MAX_M              31 /* 4KB */
 #define BCH_MAX_T              64 /* 64 bit correction */
 #endif
 
