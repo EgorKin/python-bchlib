@@ -54,6 +54,5 @@ bch.__t__
 > A readonly field; the number bit errors that can be corrected.
 
 ## Usage Example
+  Look at test.py
 
-```Look at test.py
-```
