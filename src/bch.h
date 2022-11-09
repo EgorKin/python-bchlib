@@ -31,6 +31,7 @@
 #include <linux/types.h>
 #else
 #include <stdint.h>
+#include <stdbool.h> /* added for bool support */
 #endif
 
 /**
@@ -69,10 +70,10 @@ struct bch_control {
 	int            *cache;
 	struct gf_poly *elp;
 	struct gf_poly *poly_2t[4];
-	bool		swap_bits;
+	bool            swap_bits;
 };
 
-struct bch_control *init_bch(int m, int t, unsigned int prim_poly);
+struct bch_control *init_bch(int m, int t, unsigned int prim_poly, bool swap_bits);
 						
 
 void free_bch(struct bch_control *bch);
